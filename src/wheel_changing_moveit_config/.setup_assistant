@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: "wheel_changing_moveit_config"
+    relative_path: config/ur10e_wheel_changer.urdf
+  srdf:
+    relative_path: config/ur10e_wheel_changer.srdf
+  package_settings:
+    author_name: "Fahad"
+    author_email: "fahad@example.com"
+    generated_timestamp: 1777973069

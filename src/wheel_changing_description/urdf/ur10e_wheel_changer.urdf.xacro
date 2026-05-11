@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<robot name="ur10e_wheel_changer" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find wheel_changing_description)/urdf/wheel_changing_cell_macro.xacro"/>
+
+  <xacro:arg name="ur_type" default="ur10e"/>
+  <xacro:arg name="joint_limits_parameters_file" default="$(find ur_description)/config/$(arg ur_type)/joint_limits.yaml"/>
+  <xacro:arg name="kinematics_parameters_file" default="$(find ur_description)/config/$(arg ur_type)/default_kinematics.yaml"/>
+  <xacro:arg name="physical_parameters_file" default="$(find ur_description)/config/$(arg ur_type)/physical_parameters.yaml"/>
+  <xacro:arg name="visual_parameters_file" default="$(find ur_description)/config/$(arg ur_type)/visual_parameters.yaml"/>
+
+  <link name="world"/>
+
+  <xacro:wheel_changing_cell
+    parent="world"
+    ur_type="$(arg ur_type)"
+    joint_limits_parameters_file="$(arg joint_limits_parameters_file)"
+    kinematics_parameters_file="$(arg kinematics_parameters_file)"
+    physical_parameters_file="$(arg physical_parameters_file)"
+    visual_parameters_file="$(arg visual_parameters_file)">
+    <origin xyz="0 0 0.04" rpy="0 0 0"/>
+  </xacro:wheel_changing_cell>
+
+  <!-- GAZEBO_JOINT_POSITION_CONTROLLERS_START -->
+  <!-- Version 1 simple Gazebo joint position controllers for UR10e motion testing. -->
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>shoulder_pan_joint</joint_name>
+      <topic>/ur10e/shoulder_pan_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_max>1000.0</cmd_max>
+      <initial_position>0.0</initial_position>
+          <cmd_min>-1000.0</cmd_min>
+          <p_gain>500.0</p_gain>
+          <i_gain>0.0</i_gain>
+          <d_gain>30.0</d_gain>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>shoulder_lift_joint</joint_name>
+      <topic>/ur10e/shoulder_lift_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_max>1000.0</cmd_max>
+      <initial_position>-0.033929200658769254</initial_position>
+          <cmd_min>-1000.0</cmd_min>
+          <p_gain>1200.0</p_gain>
+          <i_gain>0.0</i_gain>
+          <d_gain>80.0</d_gain>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>elbow_joint</joint_name>
+      <topic>/ur10e/elbow_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_max>1000.0</cmd_max>
+      <initial_position>-2.6320263251775287</initial_position>
+          <cmd_min>-1000.0</cmd_min>
+          <p_gain>1000.0</p_gain>
+          <i_gain>0.0</i_gain>
+          <d_gain>70.0</d_gain>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>wrist_1_joint</joint_name>
+      <topic>/ur10e/wrist_1_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_max>1000.0</cmd_max>
+      <initial_position>-0.4410796085640074</initial_position>
+          <cmd_min>-1000.0</cmd_min>
+          <p_gain>500.0</p_gain>
+          <i_gain>0.0</i_gain>
+          <d_gain>30.0</d_gain>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>wrist_2_joint</joint_name>
+      <topic>/ur10e/wrist_2_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_max>1000.0</cmd_max>
+      <initial_position>1.5959290680236151</initial_position>
+          <cmd_min>-1000.0</cmd_min>
+          <p_gain>500.0</p_gain>
+          <i_gain>0.0</i_gain>
+          <d_gain>30.0</d_gain>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>wrist_3_joint</joint_name>
+      <topic>/ur10e/wrist_3_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_max>1000.0</cmd_max>
+      <initial_position>0.0</initial_position>
+          <cmd_min>-1000.0</cmd_min>
+          <p_gain>300.0</p_gain>
+          <i_gain>0.0</i_gain>
+          <d_gain>20.0</d_gain>
+    </plugin>
+
+    
+    <!-- Sliding socket controller -->
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>ee_socket_slide_joint</joint_name>
+      <topic>/ur10e/ee_socket_slide_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_max>1000.0</cmd_max>
+      <initial_position>0.0</initial_position>
+          <cmd_min>-1000.0</cmd_min>
+          <p_gain>500.0</p_gain>
+          <i_gain>0.0</i_gain>
+          <d_gain>20.0</d_gain>
+    </plugin>
+
+    
+    <!-- Common outer wheel-gripper slide controller -->
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>ee_outer_hand_slide_joint</joint_name>
+      <topic>/ur10e/ee_outer_hand_slide_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>      <cmd_min>-1000.0</cmd_min>
+      <cmd_max>1000.0</cmd_max>
+      <initial_position>0.0</initial_position>
+      <p_gain>500.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>20.0</d_gain>
+    </plugin>
+
+
+    <!-- OUTER_HAND_RADIAL_CLOSE_CONTROLLERS_BEGIN -->
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>ee_outer_hand1_joint</joint_name>
+      <topic>/ur10e/ee_outer_hand1_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_min>-1000.0</cmd_min>
+      <cmd_max>1000.0</cmd_max>
+      <initial_position>0.0</initial_position>
+      <p_gain>1200.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>60.0</d_gain>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>ee_outer_hand2_joint</joint_name>
+      <topic>/ur10e/ee_outer_hand2_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_min>-1000.0</cmd_min>
+      <cmd_max>1000.0</cmd_max>
+      <initial_position>0.0</initial_position>
+      <p_gain>1200.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>60.0</d_gain>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>ee_outer_hand3_joint</joint_name>
+      <topic>/ur10e/ee_outer_hand3_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_min>-1000.0</cmd_min>
+      <cmd_max>1000.0</cmd_max>
+      <initial_position>0.0</initial_position>
+      <p_gain>1200.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>60.0</d_gain>
+    </plugin>
+    <!-- OUTER_HAND_RADIAL_CLOSE_CONTROLLERS_END -->
+
+<plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>ee_socket_spin_joint</joint_name>
+      <topic>/ur10e/ee_socket_spin_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_min>-1000.0</cmd_min>
+      <cmd_max>6.28</cmd_max>
+      <initial_position>0.0</initial_position>
+    </plugin>
+  
+    <!-- Lug nut finger controllers -->
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>ee_finger1_joint</joint_name>
+      <topic>/ur10e/ee_finger1_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_min>-100.0</cmd_min>
+      <cmd_max>100.0</cmd_max>
+      <initial_position>0.0</initial_position>
+      <p_gain>1800.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>90.0</d_gain>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>ee_finger2_joint</joint_name>
+      <topic>/ur10e/ee_finger2_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_max>100.0</cmd_max>
+      <initial_position>0.0</initial_position>
+      <p_gain>1800.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>90.0</d_gain>
+          <cmd_min>-100.0</cmd_min>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>ee_finger3_joint</joint_name>
+      <topic>/ur10e/ee_finger3_joint/cmd_pos</topic>
+      <use_velocity_commands>false</use_velocity_commands>
+      <cmd_max>100.0</cmd_max>
+      <initial_position>0.0</initial_position>
+      <p_gain>1800.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>90.0</d_gain>
+          <cmd_min>-100.0</cmd_min>
+    </plugin>
+</gazebo><!-- GAZEBO_JOINT_POSITION_CONTROLLERS_END -->
+</robot>

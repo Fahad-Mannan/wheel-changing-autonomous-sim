@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
+  <xacro:include filename="$(find wheel_changing_description)/urdf/dual_coaxial_end_effector.xacro"/>
+
+  <xacro:macro name="wheel_changing_cell" params="parent *origin ur_type joint_limits_parameters_file kinematics_parameters_file physical_parameters_file visual_parameters_file">
+
+    <!-- Mount/base plate for the UR10e. -->
+    <link name="robot_mount">
+      <visual>
+        <origin xyz="0 0 -0.03" rpy="0 0 0"/>
+        <geometry><cylinder radius="0.22" length="0.06"/></geometry>
+        <material name="mount_gray"><color rgba="0.35 0.35 0.35 1"/></material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 -0.03" rpy="0 0 0"/>
+        <geometry><cylinder radius="0.22" length="0.06"/></geometry>
+      </collision>
+    </link>
+
+    <joint name="world_to_robot_mount" type="fixed">
+      <parent link="${parent}"/>
+      <child link="robot_mount"/>
+      <xacro:insert_block name="origin"/>
+    </joint>
+
+    <!-- Official UR description macro. For this first project version we use empty tf_prefix so the tool frame is named tool0. -->
+    <xacro:ur_robot
+      name="${ur_type}"
+      tf_prefix=""
+      parent="robot_mount"
+      joint_limits_parameters_file="${joint_limits_parameters_file}"
+      kinematics_parameters_file="${kinematics_parameters_file}"
+      physical_parameters_file="${physical_parameters_file}"
+      visual_parameters_file="${visual_parameters_file}">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:ur_robot>
+
+    <!-- Project-specific coaxial dual end-effector attached to UR tool0. -->
+    <xacro:dual_coaxial_end_effector parent="tool0" prefix="ee"/>
+
+  </xacro:macro>
+</robot>
