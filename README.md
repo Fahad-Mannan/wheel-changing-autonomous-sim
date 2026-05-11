@@ -398,3 +398,7 @@ This can happen before the robot reaches the new-wheel detection pose. The full 
 - The camera bridge is required for the OpenCV detector.
 - The full task is executed by `scripts/run_old_dump_then_auto_new_grab.sh`.
 - Do not upload `build/`, `install/`, or `log/` folders to GitHub.
+
+- ## License
+
+This project is released under the MIT License. See the `LICENSE` file for details.
