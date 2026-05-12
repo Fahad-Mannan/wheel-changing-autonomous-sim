@@ -1,4 +1,4 @@
-# Project Guido: Rapid Pit Stop
+Project Guido: Rapid Pit Stop
 # Autonomous Wheel-Changing Simulation Using UR10e, Gazebo, OpenCV, TF, and MoveIt 2
 
 This repository contains a ROS 2 Jazzy and Gazebo simulation for an autonomous wheel-changing task using a UR10e robot. The system uses a custom wheel-changing end-effector, an RGB-D camera, OpenCV-based wheel detection, TF transformation, and MoveIt 2 inverse kinematics.
