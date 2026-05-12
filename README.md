@@ -397,7 +397,7 @@ This can happen before the robot reaches the new-wheel detection pose. The full 
 - Use `demo_ompl_only_movegroup_only.launch.py`.
 - The camera bridge is required for the OpenCV detector.
 - The full task is executed by `scripts/run_old_dump_then_auto_new_grab.sh`.
-- Do not upload `build/`, `install/`, or `log/` folders to GitHub.
+
 
 ## Contributors
 
